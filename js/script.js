@@ -23,9 +23,18 @@ const design = document.getElementById('design');
 const color = document.getElementById('color');
 const colorOptions = color.children;
 
+
 color.disabled = true;
 
 design.addEventListener('change', (e)=>{
     color.disabled = false;
+    for(let i =1;i<colorOptions.length;i++){
+        const target = e.target.value;
+        const theme = colorOptions[i].getAttribute('data-theme');
+        if(target === theme[i]){
+            theme[i].hidden =false;
+           
+        }
+    }
 })
 
