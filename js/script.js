@@ -21,18 +21,21 @@ jobField.addEventListener('change',(e)=>{
 
 const design = document.getElementById('design');
 const color = document.getElementById('color');
-const colorOptions = color.children;
-
-
 color.disabled = true;
 
+
 design.addEventListener('change', (e)=>{
+    const colorOptions = document.querySelectorAll('#color option');
     color.disabled = false;
     for(let i =1;i<colorOptions.length;i++){
-        const target = e.target.value;
-        const theme = colorOptions[i].getAttribute('data-theme');
-        if(target === theme[i]){
-            theme[i].hidden =false;
+        const target = e.target;
+        const theme = colorOptions[i];
+        
+        if(target.value === theme.getAttribute('data-theme')){
+            target.hidden =false;
+            theme.selected = true;
+
+
            
         }
     }
