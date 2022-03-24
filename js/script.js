@@ -26,17 +26,17 @@ const color = document.getElementById('color');
 color.disabled = true;
 
 
+
 design.addEventListener('change', (e)=>{
     const colorOptions = document.querySelectorAll('#color option');
-    const target = e.target;
-    
-    for(let i =1;i<colorOptions.length;i++){
-        const theme = colorOptions;
-        console.log(theme[i].getAttribute('data-theme'));
+    color.disabled = false;
+    for(let colors of colorOptions){
+        colors.style.display ='none'
+        if(e.target.value === colors.getAttribute('data-theme')){
+            console.log('true')
+            colors.style.display =''
+          
 
-        
-        if(target === theme[i].getAttribute('data-theme')){
-           console.log('true');
 
 
            
