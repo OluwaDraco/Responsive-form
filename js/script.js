@@ -18,7 +18,9 @@ jobField.addEventListener('change',(e)=>{
         }
     }
 });
-
+/**
+ * this is where the problem is
+ */
 const design = document.getElementById('design');
 const color = document.getElementById('color');
 color.disabled = true;
@@ -26,14 +28,15 @@ color.disabled = true;
 
 design.addEventListener('change', (e)=>{
     const colorOptions = document.querySelectorAll('#color option');
-    color.disabled = false;
+    const target = e.target;
+    
     for(let i =1;i<colorOptions.length;i++){
-        const target = e.target;
-        const theme = colorOptions[i];
+        const theme = colorOptions;
+        console.log(theme[i].getAttribute('data-theme'));
+
         
-        if(target.value === theme.getAttribute('data-theme')){
-            target.hidden =false;
-            theme.selected = true;
+        if(target === theme[i].getAttribute('data-theme')){
+           console.log('true');
 
 
            
