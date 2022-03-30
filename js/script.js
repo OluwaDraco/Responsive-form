@@ -60,7 +60,6 @@ activityList.addEventListener("change", (e) => {
     }
     if (e.target.checked !== true) {
         totalCost -= cost;
-        console.log(totalCost);
     }
     activityCost.innerHTML = `Total: $${totalCost}`;
 });
@@ -110,6 +109,10 @@ function valueExtract(rawData) {
     return rawData.value;
 }
 
+/**
+ * FORM VALIDATION
+ */
+
 const userForm = document.querySelector("form");
 const emailField = document.getElementById("email");
 const cvvField = document.getElementById("cvv");
@@ -123,26 +126,82 @@ userForm.addEventListener("submit", (event) => {
     const ccNumberInput = valueExtract(ccNumberField);
     const zipInput = valueExtract(zipField);
 
-    if (
-        usernameValidator(nameInput && emailValidator(emailInput)) &&
-        totalCost > 0 &&
-        payment.value !== "credit-card"
-    ) {
-        console.log("first test past");
-    }
-
-    else if (
-        payment.value == "credit-card" &&
-        ccNumberValidator(ccNumberInput) &&
-        cvvValidator(cvvInput) &&
-        zipValidator(zipInput) &&
-        usernameValidator(nameInput && emailValidator(emailInput)) &&
-        totalCost > 0
-    ) {
-        console.log("second test past");
-    }
-
-    else{
+    if(!usernameValidator(nameInput)){
         event.preventDefault();
+        nameField.classList.add('not-valid');
+        nameField.classList.remove('valid');
+        nameField.parentElement.lastElementChild.style.display ='block';
+    }else{
+        nameField.classList.remove('not-valid');
+        nameField.classList.add('valid');
+        nameField.parentElement.lastElementChild.style.display ='hide';
     }
+
+    if(!emailValidator(emailInput)){
+        event.preventDefault();
+        emailField.classList.add('not-valid');
+        emailField.classList.remove('valid');
+        emailField.parentElement.lastElementChild.style.display ='block';
+    }else{
+        emailField.classList.remove('not-valid');
+        emailField.classList.add('valid');
+        emailField.parentElement.lastElementChild.style.display ='hide';
+    }
+
+
+
+   if( payment.value === "credit-card"){
+    if(!ccNumberField(ccNumberInput)){
+        event.preventDefault();
+        ccNumberField.classList.add('not-valid');
+        ccNumberField.classList.remove('valid');
+        ccNumberField.parentElement.lastElementChild.style.display ='block';
+    }else{
+        ccNumberField.classList.remove('not-valid');
+        ccNumberField.classList.add('valid');
+        ccNumberField.parentElement.lastElementChild.style.display ='hide';
+    }
+
+       
+   }
 });
+
+const checkBox = document.querySelectorAll('#activities-box input[type=checkbox]');
+console.log(checkBox);
+
+for(let i =0;i<checkBox.length;i++){
+    checkBox[i].addEventListener('focus', e=>{
+        checkBox[i].parentElement.classList.add("focus");
+    });
+
+    checkBox[i].addEventListener('blur',e=>{
+        checkBox[i].parentElement.classList.remove("focus");
+    });
+}
+
+
+/**
+ * Accessibility INPUT VALIDATION
+ */
+
+// if(usernameValidator(usernameInput)){
+//     x.classList.add('valid');
+//     x.lastElementChild.style.display= 'none'
+
+// }
+// else{
+//     document.getElementById.classList.remove('valid');
+//     document.getElementById.classList.add('not-valid');
+//     x.lastElementChild.style.display= 'show'
+// }
+
+// if(emailValidator(usernameInput)){
+//     x.classList.add('valid');
+//     x.lastElementChild.style.display= 'none'
+
+// }
+// else{
+//     document.getElementById.classList.remove('valid');
+//     document.getElementById.classList.add('not-valid');
+//     x.lastElementChild.style.display= 'show'
+// }
