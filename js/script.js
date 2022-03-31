@@ -44,27 +44,50 @@ function showUI(show, hide, hide2) {
  * VALIDATORS
  */
 
- function usernameValidator(username) {
+/**
+ *
+ * @param {para} username checks if the username only contains alphabets
+ * @returns boolean
+ */
+function usernameValidator(username) {
     return /^[a-zA-Z]+$/.test(username);
 }
-
+/**
+ *
+ * @param {para} email checks if the email is properly formatted, [alphabets/0-9]@[alphabets].com/net/org etc.
+ * @returns boolean
+ */
 function emailValidator(mail) {
     return /^[a-zA-Z][a-zA-z0-9.]+@(gmail|yahoo|max).com$/.test(mail);
 }
-
+/**
+ *
+ * @param {para} cvv checks if cvv contains 3 digits only.
+ * @returns boolean
+ */
 function cvvValidator(num) {
     return /[0-9]{3}/.test(num);
 }
-
+/**
+ *
+ * @param {para} zip checks if zip contains 5 digits only.
+ * @returns boolean
+ */
 function zipValidator(num) {
     return /[0-9]{5}/.test(num);
 }
+/**
+ *
+ * @param {para} ccnumber checks if ccnumber contains 13-16 digits.
+ * @returns boolean
+ */
 function ccNumberValidator(num) {
     return /[0-9]{13,16}/.test(num);
 }
 
 /**
  * VALUE EXTRACTOR
+ * returns the 'value' of an html element
  */
 function valueExtract(rawData) {
     return rawData.value;
@@ -75,9 +98,9 @@ function valueExtract(rawData) {
  * @param {para} input Accept an element and updates it's class list and style if para ==='false'
  */
 function ValidInput(input) {
-    input.classList.remove("not-valid");
-    input.classList.add("valid");
-    input.parentElement.lastElementChild.style.display = "hide";
+    input.parentElement.classList.remove("not-valid", "error-border");
+    input.parentElement.classList.add("valid");
+    input.parentElement.lastElementChild.style.display = "none";
 }
 
 /**
@@ -86,18 +109,19 @@ function ValidInput(input) {
  */
 
 function notValidInput(input) {
-    input.classList.remove("valid");
-    input.classList.add("not-valid");
+    input.parentElement.classList.remove("valid");
+    input.parentElement.classList.add("not-valid", "error-border");
     input.parentElement.lastElementChild.style.display = "block";
 }
 
 /***************************************************************************** */
-
-
+/**
+ * displays the 'other' input field if 'other' is selected under JOB ROLE
+ */
 jobField.addEventListener("change", (e) => {
     const list = document.querySelectorAll("#title option");
 
-    for (let job of list) {
+    for (let i = 0; i < list.length; i++) {
         if (e.target.value === "other") {
             otherJobField.style.display = "";
         } else {
@@ -105,8 +129,6 @@ jobField.addEventListener("change", (e) => {
         }
     }
 });
-
-
 
 /**
  * when a design is picked only color options of that option is displayed the rest are hidden.
@@ -122,8 +144,10 @@ design.addEventListener("change", (e) => {
     }
 });
 
-
-
+/**
+ * Activity selection cost.calculates the total cost .
+ *
+ */
 activityList.addEventListener("change", (e) => {
     let cost = e.target.getAttribute("data-cost");
     cost = +cost;
@@ -136,19 +160,15 @@ activityList.addEventListener("change", (e) => {
     activityCost.innerHTML = `Total: $${totalCost}`;
 });
 
-
 payment.addEventListener("change", (e) => {
     if (e.target.value === "credit-card") showUI(creditCard, payPal, bitcoin);
     if (e.target.value === "paypal") showUI(payPal, bitcoin, creditCard);
     if (e.target.value === "bitcoin") showUI(bitcoin, payPal, creditCard);
 });
 
-
 /**
  * FORM VALIDATION
  */
-
-
 
 userForm.addEventListener("submit", (event) => {
     const nameInput = valueExtract(nameField);
@@ -157,40 +177,44 @@ userForm.addEventListener("submit", (event) => {
     const ccNumberInput = valueExtract(ccNumberField);
     const zipInput = valueExtract(zipField);
 
-    if (!usernameValidator(nameInput)) {
+    if (totalCost === 0) {
         event.preventDefault();
-        notValidInput(nameField);
     } else {
-        ValidInput(nameField);
-    }
-
-    if (!emailValidator(emailInput)) {
-        event.preventDefault();
-        notValidInput(emailField);
-    } else {
-        ValidInput(emailField);
-    }
-
-    if (payment.value === "credit-card") {
-        if (!ccNumberValidator(ccNumberInput)) {
-            event.preventDefault();
-            notValidInput(ccNumberField);
+        if (usernameValidator(nameInput)) {
+            ValidInput(nameField);
         } else {
-            ValidInput(ccNumberField);
+            event.preventDefault();
+            notValidInput(nameField);
         }
 
-        if (!cvvValidator(cvvInput)) {
+        if (!emailValidator(emailInput)) {
             event.preventDefault();
-            notValidInput(cvvField);
+            notValidInput(emailField);
         } else {
-            ValidInput(cvvField);
+            ValidInput(emailField);
         }
 
-        if (!zipValidator(zipInput)) {
-            event.preventDefault();
-            notValidInput(zipField);
-        } else {
-            ValidInput(zipField);
+        if (payment.value === "credit-card") {
+            if (!ccNumberValidator(ccNumberInput)) {
+                event.preventDefault();
+                notValidInput(ccNumberField);
+            } else {
+                ValidInput(ccNumberField);
+            }
+
+            if (!cvvValidator(cvvInput)) {
+                event.preventDefault();
+                notValidInput(cvvField);
+            } else {
+                ValidInput(cvvField);
+            }
+
+            if (!zipValidator(zipInput)) {
+                event.preventDefault();
+                notValidInput(zipField);
+            } else {
+                ValidInput(zipField);
+            }
         }
     }
 });
@@ -198,7 +222,9 @@ userForm.addEventListener("submit", (event) => {
 const checkBox = document.querySelectorAll(
     "#activities-box input[type=checkbox]"
 );
-
+/**
+ * ADDs styling to "focused" and "blur" state of the  input fields
+ */
 for (let i = 0; i < checkBox.length; i++) {
     checkBox[i].addEventListener("focus", (e) => {
         checkBox[i].parentElement.classList.add("focus");
