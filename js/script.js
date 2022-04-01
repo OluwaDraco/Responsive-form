@@ -58,7 +58,7 @@ function usernameValidator(username) {
  * @returns boolean
  */
 function emailValidator(mail) {
-    return /^[a-zA-Z][a-zA-z0-9.]+@(gmail|yahoo|max).com$/.test(mail);
+    return /^[a-zA-Z][a-zA-z0-9.]+@[a-zA-Z0-9]+.[a-zA-Z0-9]+$/.test(mail);
 }
 /**
  *
@@ -136,12 +136,15 @@ jobField.addEventListener("change", (e) => {
 design.addEventListener("change", (e) => {
     const colorOptions = document.querySelectorAll("#color option");
     color.disabled = false;
-    for (let colors of colorOptions) {
-        colors.style.display = "none";
-        if (e.target.value === colors.getAttribute("data-theme")) {
-            colors.style.display = "";
+    for (let i=0;i<colorOptions.length;i++) {
+        colorOptions[i].style.display = "none";
+        if (e.target.value === colorOptions[i].getAttribute("data-theme")) {
+            colorOptions[i].style.display = "";
+            color.value =colorOptions[0];
         }
+        
     }
+   
 });
 
 /**
@@ -150,10 +153,19 @@ design.addEventListener("change", (e) => {
  */
 activityList.addEventListener("change", (e) => {
     let cost = e.target.getAttribute("data-cost");
+    const times = document.querySelectorAll('input[type="checkbox"]')
+    console.log(times);
     cost = +cost;
     if (e.target.checked == true) {
         totalCost += cost;
-    }
+        for(let i =1;i<times.length;i++){
+            console.log(times[i].parentElement.querySelector('span:nth-child(3)'))
+            // if(times[i].parentElement.querySelector('span:nth-child(3)'.textContent=== e.target.parentElement.querySelector('span:nth-child(3)'))){
+            //     console.log('true');
+            // }
+            // console.log(times[i].parentElement.querySelector('span:nth-child(3)'));
+        }
+}
     if (e.target.checked !== true) {
         totalCost -= cost;
     }
