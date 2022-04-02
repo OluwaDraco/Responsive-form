@@ -41,7 +41,7 @@ function showUI(show, hide, hide2) {
 }
 
 /**
- * VALIDATORS
+ * VALIDATORS FUNCTIONS
  */
 
 /**
