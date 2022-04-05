@@ -158,13 +158,6 @@ activityList.addEventListener("change", (e) => {
     cost = +cost;
     if (e.target.checked == true) {
         totalCost += cost;
-        for(let i =1;i<times.length;i++){
-            console.log(times[i].parentElement.querySelector('span:nth-child(3)'))
-            // if(times[i].parentElement.querySelector('span:nth-child(3)'.textContent=== e.target.parentElement.querySelector('span:nth-child(3)'))){
-            //     console.log('true');
-            // }
-            // console.log(times[i].parentElement.querySelector('span:nth-child(3)'));
-        }
 }
     if (e.target.checked !== true) {
         totalCost -= cost;
@@ -191,7 +184,7 @@ userForm.addEventListener("submit", (event) => {
 
     if (totalCost === 0) {
         event.preventDefault();
-    } else {
+    } 
         if (usernameValidator(nameInput)) {
             ValidInput(nameField);
         } else {
@@ -229,7 +222,7 @@ userForm.addEventListener("submit", (event) => {
             }
         }
     }
-});
+);
 
 const checkBox = document.querySelectorAll(
     "#activities-box input[type=checkbox]"
