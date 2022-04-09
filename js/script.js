@@ -153,8 +153,6 @@ design.addEventListener("change", (e) => {
  */
 activityList.addEventListener("change", (e) => {
     let cost = e.target.getAttribute("data-cost");
-    const times = document.querySelectorAll('input[type="checkbox"]')
-    console.log(times);
     cost = +cost;
     if (e.target.checked == true) {
         totalCost += cost;
@@ -184,7 +182,11 @@ userForm.addEventListener("submit", (event) => {
 
     if (totalCost === 0) {
         event.preventDefault();
-    } 
+        notValidInput(activityCost)
+
+    } else{
+        ValidInput(activityCost)
+    }
         if (usernameValidator(nameInput)) {
             ValidInput(nameField);
         } else {
