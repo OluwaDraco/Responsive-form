@@ -58,7 +58,7 @@ function usernameValidator(username) {
  * @returns boolean
  */
 function emailValidator(mail) {
-    return /^[a-zA-Z][a-zA-z0-9.]+@[a-zA-Z0-9]+.[a-zA-Z0-9]+$/.test(mail);
+    return /^[a-zA-Z][a-zA-z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/.test(mail);
 }
 /**
  *
